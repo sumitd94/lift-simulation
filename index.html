@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Lift Simulation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    #loader-section {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    #loader-section span {
+      font-size: 80px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      line-height: 1;
+      mix-blend-mode: difference;
+    }
+
+    #loader-section::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 150px;
+      height: 100%;
+      background-color: white;
+      transform: skewX(20deg);
+      animation: move 4s linear infinite;
+    }
+
+    @keyframes move {
+
+      0%,
+      100% {
+        left: 0;
+      }
+
+      50% {
+        left: calc(100% - 150px);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white">
+  <div>
+    <div class="flex flex-col justify-center items-center h-screen" id="number-of-floor-config">
+      <h3 class="w-2/4">How many floors do you need?</h3>
+      <input class="border-2 border-slate-600 px-2 py-4 m-4 rounded-lg w-2/4" type="text" id="floors" value="1">
+      <span id="floor-error" class="text-red-600 py-4"></span>
+      <button class="px-12 py-4 bg-green-600 rounded-lg text-white" id="number-of-floor-button">
+        Next
+      </button>
+    </div>
+    <div class="hidden flex flex-col justify-center items-center h-screen" id="number-of-lifts-config">
+      <h3 class="w-2/4">Right! And how many lifts?</h3>
+      <input class="border-2 border-slate-600 px-2 py-4 m-4 rounded-lg w-2/4" type="number" id="lifts" value="1" min="1"
+        max="5">
+      <span id="lift-error" class="text-red-600 py-4"></span>
+      <button class="text-white px-12 py-4 bg-green-600 rounded-lg" id="number-of-lifts-button">
+        Begin
+      </button>
+    </div>
+    <div class="hidden" id="loader-section">
+      <span>Generating Lift</span>
+    </div>
+    <div id="building" class="flex flex-col items-center w-screen hidden justify-center h-screen"></div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
