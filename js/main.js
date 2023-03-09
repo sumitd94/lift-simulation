@@ -25,6 +25,7 @@ const building = document.getElementById('building');
 
 // number of lifts at a floor
 const liftsOnFloor = new Map();
+const pendingLiftRequest = [];
 
 const getAvailableLift = (calledFloorNumber) => {
   for (const floor of liftsOnFloor.keys()) {
@@ -32,6 +33,14 @@ const getAvailableLift = (calledFloorNumber) => {
       if (lift.status === 'idle') return lift;
     }
   }
+};
+
+const handlePendingLiftRequests = () => {
+  console.log(pendingLiftRequest);
+  if (pendingLiftRequest.length === 0) return;
+
+  const calledFloorNumber = pendingLiftRequest.shift();
+  handleLiftCall(calledFloorNumber);
 };
 
 const handleLiftCall = (calledFloorNumber) => {
@@ -44,6 +53,12 @@ const handleLiftCall = (calledFloorNumber) => {
 
   // get available lift
   const availableLift = getAvailableLift(calledFloorNumber);
+
+  if (!availableLift) {
+    pendingLiftRequest.push(calledFloorNumber);
+    return;
+  }
+
   const liftElement = document.getElementById(`lift-${availableLift.id}`);
 
   const translatePixel = -(calledFloorNumber - startingFloorOfLift) * 80;
@@ -66,6 +81,7 @@ const handleLiftCall = (calledFloorNumber) => {
   setTimeout(() => {
     availableLift.status = 'idle';
     availableLift.floor = calledFloorNumber;
+    handlePendingLiftRequests();
   }, transformMs);
 };
 
