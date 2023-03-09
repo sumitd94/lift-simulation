@@ -36,7 +36,6 @@ const getAvailableLift = (calledFloorNumber) => {
 };
 
 const handlePendingLiftRequests = () => {
-  console.log(pendingLiftRequest);
   if (pendingLiftRequest.length === 0) return;
 
   const calledFloorNumber = pendingLiftRequest.shift();
